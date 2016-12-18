@@ -5,12 +5,30 @@
  * cloning flags:
  */
 #define CSIGNAL		0x000000ff	/* signal mask to be sent at exit */
-#define CLONE_VM	0x00000100	/* set if VM shared between processes */
-#define CLONE_FS	0x00000200	/* set if fs info shared between processes */
-#define CLONE_FILES	0x00000400	/* set if open files shared between processes */
-#define CLONE_SIGHAND	0x00000800	/* set if signal handlers and blocked signals shared */
-#define CLONE_PTRACE	0x00002000	/* set if we want to let tracing continue on the child too */
-#define CLONE_VFORK	0x00004000	/* set if the parent wants the child to wake it up on mm_release */
+#define CLONE_VM	0x00000100	/* 
+                                 * set if VM shared between processes
+                                 * 父子进程共享地址空间，linux中的线程
+                                 */
+#define CLONE_FS	0x00000200	/* 
+                                 * set if fs info shared between processes
+                                 * 父子进程共享文件系统信息
+                                 */
+#define CLONE_FILES	0x00000400	/* 
+                                 * set if open files shared between processes 
+                                 * 父子进程共享打开的文件
+                                 */
+#define CLONE_SIGHAND	0x00000800	/*
+                                     * set if signal handlers and blocked signals shared 
+                                     * 父子进程共享信号处理函数和被阻断的信号
+                                     */
+#define CLONE_PTRACE	0x00002000	/*
+                                     * set if we want to let tracing continue on the child too 
+                                     * 继续调试子进程
+                                     */
+#define CLONE_VFORK	0x00004000	/*
+                                 * set if the parent wants the child to wake it up on mm_release 
+                                 * 调用vfork，父进程准备睡眠等待子进程将其唤醒
+                                 */
 #define CLONE_PARENT	0x00008000	/* set if we want to have the same parent as the cloner */
 #define CLONE_THREAD	0x00010000	/* Same thread group? */
 #define CLONE_NEWNS	0x00020000	/* New mount namespace group */

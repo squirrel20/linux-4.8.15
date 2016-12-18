@@ -203,6 +203,11 @@ extern void proc_sched_set_task(struct task_struct *p);
  * about the task exiting. Confusing, but this way
  * modifying one set can't modify the other one by
  * mistake.
+ * TASK_RUNNING 进程正在执行，或是在运行队列中等待执行
+ * TASK_INTERRUPTIBLE 进程正在睡眠（阻塞），可接收信号
+ * TASK_UNINTERRUPTIBLE 进程正在睡眠（阻塞），不可接收信号
+ * __TASK_STOPPED 进程停止执行
+ * __TASK_TRACED 被其他进程跟踪的进程，例如通过ptrace对调试进程进行跟踪
  */
 #define TASK_RUNNING		0
 #define TASK_INTERRUPTIBLE	1
@@ -254,6 +259,7 @@ extern char ___assert_task_state[1 - 2*!!(
 
 #ifdef CONFIG_DEBUG_ATOMIC_SLEEP
 
+/* 设置进程状态 */
 #define __set_task_state(tsk, state_value)			\
 	do {							\
 		(tsk)->task_state_change = _THIS_IP_;		\
@@ -1457,7 +1463,23 @@ struct tlbflush_unmap_batch {
 	bool writable;
 };
 
+/* 好大的结构体 */
 struct task_struct {
+    /* 
+     * state 进程状态，有如下几种: 
+     * #define TASK_RUNNING		    0   进程正在执行，或在运行队列中待执行
+     * #define TASK_INTERRUPTIBLE	1   进程被阻塞，可以接收信号
+     * #define TASK_UNINTERRUPTIBLE	2   进程被阻塞，不接收信号
+     * #define __TASK_STOPPED		4   进程停止执行
+     * #define __TASK_TRACED		8   被其他进程跟踪的进程，例如通过ptrace对调试进程进行追踪
+     * #define TASK_DEAD		    64
+     * #define TASK_WAKEKILL		128
+     * #define TASK_WAKING		    256
+     * #define TASK_PARKED		    512
+     * #define TASK_NOLOAD		    1024
+     * #define TASK_NEW		        2048
+     * #define TASK_STATE_MAX		4096
+     */
 	volatile long state;	/* -1 unrunnable, 0 runnable, >0 stopped */
 	void *stack;
 	atomic_t usage;
@@ -1528,7 +1550,13 @@ struct task_struct {
 #if defined(SPLIT_RSS_COUNTING)
 	struct task_rss_stat	rss_stat;
 #endif
-/* task state */
+    /* task state */
+    /*
+     * exit_state状态：
+     * #define EXIT_DEAD		16
+     * #define EXIT_ZOMBIE		32
+     * #define EXIT_TRACE		(EXIT_ZOMBIE | EXIT_DEAD)
+     */
 	int exit_state;
 	int exit_code, exit_signal;
 	int pdeath_signal;  /*  The signal sent when the parent dies  */
