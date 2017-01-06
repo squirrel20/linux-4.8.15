@@ -25,19 +25,23 @@
 |usr            |早期用户空间代码（所谓的initramfs）
 |virt           |虚拟化基础结构
 
-|~结构体                |~位置                          |说明
+| 结构体                | 位置                          | 说明 |
+| ---                   | ---                           | --- | 
 |task\_struct           |linux/sched.h                  |进程描述符
 |thread\_info           |asm/thread\_info.h             |
 |sys\_call\_table       |arch/ia64/kernel/entry.S       |系统调用表
 |list\_head             |include/linux/types.h, list.h  |链表
 
-|~函数                  |~位置                              |说明
+| 函数                  | 位置                              | 说明 |
+| ---                   | ---                               | --- |
 |copy\_from\_user       |arch/ia64/include/asm/uaccess.h    |从用户空间读取数据到内核空间
 |copy\_to\_user         |arch/ia64/include/asm/uaccess.h    |从内核空间写数据到用户空间
 
-|~术语          |描述
+| 术语          | 描述 |
+| ---           | ---  |
 |smp            |对称多处理系统 Symmetric Multi Processing
 
-|~文件          |功能
-|kernel/sys.c   |定义常用的系统调用
+| 文件                                  | 功能 |
+| ---                                   | ---  |
+|kernel/sys.c                           |定义常用的系统调用
 |include/uapi/asm-generic/unistd.h      |定义系统调用号
