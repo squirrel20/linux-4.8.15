@@ -27,12 +27,12 @@
 /*
  * red-black trees properties:  http://en.wikipedia.org/wiki/Rbtree
  *
- *  1) A node is either red or black
- *  2) The root is black
- *  3) All leaves (NULL) are black
- *  4) Both children of every red node are black
+ *  1) A node is either red or black 节点是红色或黑色
+ *  2) The root is black 根结点是黑色
+ *  3) All leaves (NULL) are black 所有叶子节点是黑色
+ *  4) Both children of every red node are black 每个红色节点的子节点为黑色
  *  5) Every simple path from root to leaves contains the same number
- *     of black nodes.
+ *     of black nodes. 每条从根结点到叶子节点到最短路径中到黑节点数相同
  *
  *  4 and 5 give the O(log n) guarantee, since 4 implies you cannot have two
  *  consecutive red nodes in a path and every red node is therefore followed by
